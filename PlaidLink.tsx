@@ -82,7 +82,8 @@ export default function PlaidLink({
           },
         })
       } else if (event.url.startsWith('plaidlink://connected') && onSuccess) {
-        const publicToken = eventParams.public_token as string
+        let publicToken = eventParams.public_token as string
+        if (!publicToken) publicToken = eventParams["plaidlink://connected?public_token"] as string
         const accounts = JSON.parse(eventParams.accounts as string)
         onSuccess({
           publicToken,
